@@ -103,5 +103,15 @@ public class OrderRepository {
                         " join fetch o.delivery d", Order.class
         ).getResultList();
     }
+
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select distinct o from Order o" +      //distinct는 db쿼리 중복뿐만 아니라 객체 중복도 걸러줌
+                " join fetch o.member m" +
+                " join fetch o.delivery d" +
+                " join fetch o.orderItems oi" +
+                " join fetch oi.item i", Order.class)
+                .getResultList();
+    }
 }
 
